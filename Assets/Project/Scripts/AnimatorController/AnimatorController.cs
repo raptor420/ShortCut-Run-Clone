@@ -12,6 +12,7 @@ public class AnimatorController : MonoBehaviour
     }
     public void StateRun()
     {
+       //animator.applyRootMotion = false;
         animator.Play("Run");
 
 

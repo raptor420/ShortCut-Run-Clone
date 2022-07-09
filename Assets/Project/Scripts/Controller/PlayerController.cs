@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
    [SerializeField] float rotateSpeed = 5;
    [SerializeField] float moveSpeed = 5;
     [SerializeField] AnimatorController animator;
+    bool startRun= false;
+    [SerializeField] Transform characterBody;
     // Start is called before the first frame update
     private void Start()
     {
@@ -16,8 +18,33 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        PlayerInput();
+        StackerAnimChecker();
+    }
+
+    private void StackerAnimChecker()
+    {
+        if (!startRun) return;
+        if (GetComponent<Stacker>().getStackAmount() > 0)
+        {
+            characterBody.localRotation = Quaternion.identity;
+
+            GetComponent<AnimatorController>().StateCarry();
+        }
+        else
+        {
+            characterBody.localRotation = Quaternion.identity;
+
+            GetComponent<AnimatorController>().StateRun();
+
+        }
+    }
+
+    private void PlayerInput()
+    {
         if (Input.touchCount > 0)
         {
+            CheckStartRun();
             touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Moved)
             {
@@ -29,8 +56,19 @@ public class PlayerController : MonoBehaviour
 
 
         }
+        if(startRun)
         transform.position += transform.forward * moveSpeed * Time.deltaTime;
-        animator.StateRun();
+    }
+
+    private void CheckStartRun()
+    {
+        if (!startRun)
+        {
+            startRun = true;
+           characterBody.localRotation = Quaternion.identity;
+            animator.StateRun();
+
+        }
     }
 
     private void FixedUpdate()
