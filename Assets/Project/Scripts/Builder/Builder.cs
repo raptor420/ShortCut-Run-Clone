@@ -50,16 +50,17 @@ public class Builder : MonoBehaviour
 
     private void BuildChecker()
     {
-        Debug.DrawRay(transform.position, Vector3.down*5, Color.green);
+        Debug.DrawRay(new Vector3(transform.position.x,transform.position.y+1,transform.position.z) + transform.forward, -transform.up, Color.red);
         RaycastHit hit;
-        if (Physics.Raycast(footPos.position, Vector3.down, out hit, 5))
+        if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, Vector3.one * .5f, -transform.up, out hit))
         {
             if (hit.collider != null)
             {
+                Debug.Log(hit.collider.name);
                 if (hit.collider.gameObject == this) return;
                 if (hit.collider.CompareTag("Water"))
                 {
-                    Debug.Log("WATER");
+                    // Debug.Log("WATER");
                     // water
                     building = true;
                 }
@@ -72,5 +73,28 @@ public class Builder : MonoBehaviour
             }
 
         }
+        //if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, -transform.up, out hit))
+        //{
+        //    if (hit.collider != null)
+        //    {
+        //        Debug.Log(hit.collider.name);
+        //        if (hit.collider.gameObject == this) return;
+        //        if (hit.collider.CompareTag("Water"))
+        //        {
+        //           // Debug.Log("WATER");
+        //            // water
+        //           building = true;
+        //        }
+        //        else
+        //        {
+        //            building = false;
+        //        }
+
+
+        //    }
+
+        //}
+
+
     }
 }
