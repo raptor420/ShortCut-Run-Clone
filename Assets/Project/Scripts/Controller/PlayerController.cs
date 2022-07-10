@@ -71,13 +71,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit,10))
-        {
-            Debug.Log(hit.transform.name);
+   
 
-        }
-    }
+
+
 }

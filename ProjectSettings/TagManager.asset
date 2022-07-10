@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PickUp
+  - Water
   layers:
   - Default
   - TransparentFX

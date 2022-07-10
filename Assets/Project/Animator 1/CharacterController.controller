@@ -99,7 +99,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Carry
-  m_Speed: 1
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -111,7 +111,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 87ee8dd92ecf97e4da67d35e72a69e38,
+  m_Motion: {fileID: -203655887218126122, guid: 51a6d838e3ac3e94ba99f91fc16472f3,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
@@ -214,7 +214,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 617c38a227bd5184d98679837f1b5361,
+  m_Motion: {fileID: -9121621101649706817, guid: e7b8f878985615a459f1918a8ec9218a,
     type: 3}
   m_Tag: 
   m_SpeedParameter: 
