@@ -8,6 +8,8 @@ TagManager:
   - Water
   - Ground
   - VCamFollow
+  - FxTemporaire
+  - JumpPod
   layers:
   - Default
   - TransparentFX

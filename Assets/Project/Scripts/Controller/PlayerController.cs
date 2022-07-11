@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Touch touch;
@@ -110,14 +111,17 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
        if( collision.collider.CompareTag("Water"))
-         {
+         {// better to make it OnDeath, but theres no time
             death = true;
             vCamFollow.Follow = null;
             vCamFollow.LookAt = null;
             collision.collider.GetComponent<Collider>().enabled = false;
             GetComponent<Rigidbody>().useGravity = true;
             animator.StateDeath();
+           // Time.timeScale = .5f;
+            GetComponent<ParticlePlayer>().PlayWaterParticle();
             Destroy(this.gameObject,5);
+            SceneManager.LoadScene(0);
         }
     }
 

@@ -33,12 +33,13 @@ public class Builder : MonoBehaviour
     private void BuildMethod()
     {
         if (!building) return;
+       
         timer += Time.deltaTime;
         if (timer >= waitTime)
         {
             //build;
             GetComponent<Stacker>().UseItem();
-           var plank =  Instantiate(buildPrefab, new Vector3(footPos.position.x, footPos.position.y, footPos.position.z), transform.rotation);
+           var plank =  Instantiate(buildPrefab, new Vector3(footPos.position.x, 1, footPos.position.z), transform.rotation);
           
             var initRot = plank.transform.rotation;
             plank.transform.DOPunchScale(Vector3.one*.25f, .5f).OnComplete(()=>plank.GetComponent<Collider>().enabled=true);
@@ -51,9 +52,10 @@ public class Builder : MonoBehaviour
 
     private void BuildChecker()
     {
-        Debug.DrawRay(new Vector3(transform.position.x,transform.position.y+1,transform.position.z) + transform.forward, -transform.up, Color.red);
+        Debug.DrawRay(new Vector3(transform.position.x,transform.position.y+1,transform.position.z), -transform.up, Color.red);
         RaycastHit hit;
-        if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward*.5f, Vector3.one * .25f, Vector3.down, out hit,Quaternion.identity,5))
+      //  if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward*.5f, Vector3.one * .25f, Vector3.down, out hit,Quaternion.identity,5))
+      if ((Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, Vector3.down, out hit,2.5f)))
         {
             if (hit.collider != null)
             {
@@ -66,7 +68,6 @@ public class Builder : MonoBehaviour
                     if (GetComponent<Stacker>().getStackAmount() <= 0)
                     {
                         building = false;
-                        //do jump
                         return;
                     }
 

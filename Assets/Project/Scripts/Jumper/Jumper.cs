@@ -10,11 +10,20 @@ public class Jumper : MonoBehaviour
     [SerializeField] LayerMask ground;
     public void Jump()
     {
+        jumping = true;
         Debug.Log("JUMP");
         // transform.DOJump(transform.forward*5,5,1,3);
         transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 10, 0), ForceMode.Impulse);
         transform.GetComponent<Rigidbody>().useGravity = true;
-        // transform.GetComponent<Rigidbody>().doju
+    }
+
+    public void BoostedJump()
+    {
+        jumping = true;
+
+        Debug.Log("we in boosted Jump");
+        transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 15, 0), ForceMode.Impulse);
+        transform.GetComponent<Rigidbody>().useGravity = true;
     }
     public bool IsJumping()
     {
@@ -29,6 +38,10 @@ public class Jumper : MonoBehaviour
     private void Update()
     {
         JumpChecker();
+        if (GetComponent<Builder>().IsBuilding())
+        {
+            jumping = false; 
+        }
     }
 
     private void JumpChecker()
@@ -39,7 +52,7 @@ public class Jumper : MonoBehaviour
         {
             if (hit.collider != null)
             {
-                Debug.Log(hit.collider.name);
+              //  Debug.Log(hit.collider.name);
                 if (hit.collider.gameObject == this) return;
                 if (hit.collider.CompareTag("Water"))
                 {
@@ -49,7 +62,7 @@ public class Jumper : MonoBehaviour
                     {
                         if (jumping) return;
 
-                        jumping = true;
+                      
                         Jump();
 
 
@@ -104,6 +117,13 @@ public class Jumper : MonoBehaviour
 
         }
     }
+
+
+    public void JumpPodJump()
+    {
+        BoostedJump();
+        Debug.Log("Wee jumopuin");
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Ground"))
@@ -111,5 +131,23 @@ public class Jumper : MonoBehaviour
             jumping = false;
 
         }
+
+       else if (collision.collider.CompareTag("JumpPod"))
+        {
+            jumping = true;
+            JumpPodJump();
+
+        }
+      
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+          if (other.CompareTag("JumpPod"))
+        {
+            jumping = true;
+            JumpPodJump();
+
+        }
+
     }
 }

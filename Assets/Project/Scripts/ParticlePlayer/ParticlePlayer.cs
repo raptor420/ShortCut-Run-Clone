@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class ParticlePlayer : MonoBehaviour
 {
+    [SerializeField] GameObject waterparticle;
     // Start is called before the first frame update
-    void Start()
+    public void PlayWaterParticle()
     {
-        
-    }
+        if(waterparticle)
+        Instantiate(waterparticle, transform.position,Quaternion.identity);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

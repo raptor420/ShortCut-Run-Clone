@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class JumpPod : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.collider.GetComponent<Jumper>() != null)
+    //    {
+    //        collision.collider.GetComponent<Jumper>().JumpPodJump();
+
+    //    }
+    //}
+
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.GetComponent<Jumper>() != null)
+    //    {
+    //        other.GetComponent<Jumper>().JumpPodJump();
+
+    //    }
+    //}
 }
