@@ -46,7 +46,7 @@ public class Builder : MonoBehaviour
             // ) ;
             // ;
             var initRot = plank.transform.rotation;
-            plank.transform.DOPunchScale(Vector3.one*.25f, .5f);
+            plank.transform.DOPunchScale(Vector3.one*.25f, .5f).OnComplete(()=>plank.GetComponent<Collider>().enabled=true);
             //plank.transform.DOLocalRotate(new Vector3(0, 0, -30), .1f, RotateMode.LocalAxisAdd).SetDelay(.25f).OnComplete(() => plank.transform.DOLocalRotate(new Vector3(0, 0, 60), .1f, RotateMode.LocalAxisAdd));
             //plank.transform.DOLocalRotateQuaternion(initRot,.1f).SetDelay(.4f);
             timer = 0;
@@ -59,7 +59,7 @@ public class Builder : MonoBehaviour
     {
         Debug.DrawRay(new Vector3(transform.position.x,transform.position.y+1,transform.position.z) + transform.forward, -transform.up, Color.red);
         RaycastHit hit;
-        if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, Vector3.one * .5f, -transform.up, out hit,Quaternion.identity,2))
+        if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward*.5f, Vector3.one * .25f, Vector3.down, out hit,Quaternion.identity,5))
         {
             if (hit.collider != null)
             {

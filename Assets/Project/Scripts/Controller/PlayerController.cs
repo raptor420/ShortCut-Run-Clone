@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<AnimatorController>();
+        animator.StateIdle();
     }
     private void Update()
     {
@@ -26,15 +27,14 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedBoostControl()
     {
-        if (GetComponent<Builder>().IsBuilding()|| GetComponent<Jumper>().IsJumping())
+        if (GetComponent<Builder>().IsBuilding())
         {
             timer += Time.deltaTime;
-            moveSpeed = Mathf.Lerp(5, 7, timer);
+            moveSpeed = Mathf.Lerp(5, 8, timer);
         }
 
         else
         {
-            Debug.Log("oo no");
             timer = 0;
             moveSpeed = 5;
         }
