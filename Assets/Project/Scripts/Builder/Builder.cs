@@ -20,7 +20,14 @@ public class Builder : MonoBehaviour
     {
         BuildChecker();
         BuildMethod();
+       
+            transform.GetComponent<Rigidbody>().useGravity = !building;
+        
+    }
 
+    public bool IsBuilding()
+    {
+        return building;
     }
 
     private void BuildMethod()
@@ -52,16 +59,23 @@ public class Builder : MonoBehaviour
     {
         Debug.DrawRay(new Vector3(transform.position.x,transform.position.y+1,transform.position.z) + transform.forward, -transform.up, Color.red);
         RaycastHit hit;
-        if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, Vector3.one * .5f, -transform.up, out hit))
+        if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, Vector3.one * .5f, -transform.up, out hit,Quaternion.identity,2))
         {
             if (hit.collider != null)
             {
-                Debug.Log(hit.collider.name);
+              //  Debug.Log(hit.collider.name);
                 if (hit.collider.gameObject == this) return;
                 if (hit.collider.CompareTag("Water"))
                 {
                     // Debug.Log("WATER");
                     // water
+                    if (GetComponent<Stacker>().getStackAmount() <= 0)
+                    {
+                        building = false;
+                        //do jump
+                        return;
+                    }
+
                     building = true;
                 }
                 else

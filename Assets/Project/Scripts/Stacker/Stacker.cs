@@ -42,7 +42,7 @@ public class Stacker : MonoBehaviour
         {
             Destroy(stackedItems[stackedItems.Count - 1]);
             stackedItems.RemoveAt(stackedItems.Count - 1);
-
+            stackAmount--;
         }
     }
 }

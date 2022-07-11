@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AnimatorController animator;
     bool startRun= false;
     [SerializeField] Transform characterBody;
+    float timer;
     // Start is called before the first frame update
     private void Start()
     {
@@ -18,8 +19,25 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        SpeedBoostControl();
         PlayerInput();
         StackerAnimChecker();
+    }
+
+    private void SpeedBoostControl()
+    {
+        if (GetComponent<Builder>().IsBuilding()|| GetComponent<Jumper>().IsJumping())
+        {
+            timer += Time.deltaTime;
+            moveSpeed = Mathf.Lerp(5, 7, timer);
+        }
+
+        else
+        {
+            Debug.Log("oo no");
+            timer = 0;
+            moveSpeed = 5;
+        }
     }
 
     private void StackerAnimChecker()
