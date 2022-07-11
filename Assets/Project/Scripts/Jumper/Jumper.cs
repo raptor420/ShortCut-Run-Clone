@@ -7,17 +7,18 @@ public class Jumper : MonoBehaviour
     public float jumpDist;
     public float jumpTime;
     bool jumping;
+    [SerializeField] LayerMask ground;
     public void Jump()
     {
         Debug.Log("JUMP");
         // transform.DOJump(transform.forward*5,5,1,3);
-        transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 10,0),ForceMode.Impulse);
+        transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 10, 0), ForceMode.Impulse);
         transform.GetComponent<Rigidbody>().useGravity = true;
-     // transform.GetComponent<Rigidbody>().doju
+        // transform.GetComponent<Rigidbody>().doju
     }
     public bool IsJumping()
     {
-    return    jumping;
+        return jumping;
     }
 
     public void Land()
@@ -34,11 +35,11 @@ public class Jumper : MonoBehaviour
     {
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, -transform.up, Color.red);
         RaycastHit hit;
-        if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, Vector3.one * .5f, -transform.up, out hit,Quaternion.identity,2))
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, Vector3.down, out hit))
         {
             if (hit.collider != null)
             {
-               // Debug.Log(hit.collider.name);
+                Debug.Log(hit.collider.name);
                 if (hit.collider.gameObject == this) return;
                 if (hit.collider.CompareTag("Water"))
                 {
@@ -56,20 +57,59 @@ public class Jumper : MonoBehaviour
 
 
                 }
-                else 
+                else
                 {
-                    jumping = false;
-                  //  transform.GetComponent<Rigidbody>().useGravity = false;
-
-                   //landed
+                    //  transform.GetComponent<Rigidbody>().useGravity = false;
+                    //landed
                 }
-
-
             }
 
+            //if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward*.5f, Vector3.one * .2f, Vector3.down, out hit,Quaternion.identity,2))
+            //{
+            //    if (hit.collider != null)
+            //    {
+            //        Debug.Log(hit.collider.name);
+            //        if (hit.collider.gameObject == this) return;
+            //        if (hit.collider.CompareTag("Water"))
+            //        {
+            //            // Debug.Log("WATER");
+            //            // water
+            //            if (GetComponent<Stacker>().getStackAmount() <= 0)
+            //            {
+            //                if (jumping) return;
+
+            //                jumping = true;
+            //                Jump();
+
+
+            //            }
+
+
+            //        }
+            //        else 
+            //        {
+            //            //  transform.GetComponent<Rigidbody>().useGravity = false;
+            //            jumping = false;
+            //           //landed
+            //        }
+
+
+            //    }
+
+            //}
+
+
+
+
+
         }
-   
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            jumping = false;
 
-
+        }
     }
 }

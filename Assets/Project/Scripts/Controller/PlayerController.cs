@@ -23,11 +23,20 @@ public class PlayerController : MonoBehaviour
         SpeedBoostControl();
         PlayerInput();
         StackerAnimChecker();
+        if (GetComponent<Jumper>().IsJumping())
+        {
+            GetComponent<Rigidbody>().constraints =RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation| RigidbodyConstraints.FreezePositionY;
+        }
+      
     }
 
     private void SpeedBoostControl()
     {
-        if (GetComponent<Builder>().IsBuilding())
+        if (GetComponent<Builder>().IsBuilding()||GetComponent<Jumper>().IsJumping())
         {
             timer += Time.deltaTime;
             moveSpeed = Mathf.Lerp(5, 8, timer);
