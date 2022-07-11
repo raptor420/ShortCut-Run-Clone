@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class PlayerController : MonoBehaviour
 {
     private Touch touch;
@@ -11,15 +11,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AnimatorController animator;
     bool startRun= false;
     [SerializeField] Transform characterBody;
+    [SerializeField]  CinemachineVirtualCamera vCamFollow;
     float timer;
+    bool death;
     // Start is called before the first frame update
     private void Start()
     {
         animator = GetComponent<AnimatorController>();
+        if (vCamFollow == null)
+        {
+            vCamFollow= GameObject.FindGameObjectWithTag("VcamFollow").
+            GetComponent<CinemachineVirtualCamera>();
+        }
         animator.StateIdle();
     }
     private void Update()
     {
+        if (death) return;
         SpeedBoostControl();
         PlayerInput();
         StackerAnimChecker();
@@ -98,8 +106,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   
 
+    private void OnCollisionEnter(Collision collision)
+    {
+       if( collision.collider.CompareTag("Water"))
+         {
+            death = true;
+            vCamFollow.Follow = null;
+            vCamFollow.LookAt = null;
+            collision.collider.GetComponent<Collider>().enabled = false;
+            GetComponent<Rigidbody>().useGravity = true;
+            animator.StateDeath();
+            Destroy(this.gameObject,5);
+        }
+    }
 
 
 }

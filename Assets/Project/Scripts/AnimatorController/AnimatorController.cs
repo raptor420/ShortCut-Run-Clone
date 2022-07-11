@@ -35,4 +35,12 @@ public class AnimatorController : MonoBehaviour
 
 
     }
+    public void StateDeath()
+    {
+
+        animator.applyRootMotion = false;
+        animator.Play("Fall");
+
+
+    }
 }

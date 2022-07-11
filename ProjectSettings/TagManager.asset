@@ -7,6 +7,7 @@ TagManager:
   - PickUp
   - Water
   - Ground
+  - VCamFollow
   layers:
   - Default
   - TransparentFX
