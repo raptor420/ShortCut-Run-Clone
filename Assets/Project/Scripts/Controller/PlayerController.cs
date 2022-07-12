@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 public class PlayerController : MonoBehaviour
 {
     private Touch touch;
@@ -15,6 +16,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]  CinemachineVirtualCamera vCamFollow;
     float timer;
     bool death;
+    [Header("FINISHER")]
+    bool finished;
+    public int playerPlace;
+    public int finalPlayerPlace;
     // Start is called before the first frame update
     private void Start()
     {
@@ -29,6 +34,13 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (death) return;
+        if (finished)
+        {
+            return;
+        }
+        
+        playerPlace = GameManager.instance.GetPlayerPlace();
+        GetComponent<PlayerTextVisualizers>().UpdatetxtPlace(playerPlace);
         SpeedBoostControl();
         PlayerInput();
         StackerAnimChecker();
@@ -43,6 +55,11 @@ public class PlayerController : MonoBehaviour
       
     }
 
+    private void LateUpdate()
+    {
+        
+      
+    }
     private void SpeedBoostControl()
     {
         if (GetComponent<Builder>().IsBuilding()||GetComponent<Jumper>().IsJumping())
@@ -111,19 +128,50 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
        if( collision.collider.CompareTag("Water"))
-         {// better to make it OnDeath, but theres no time
+        {// better to make it OnDeath, but theres no time
             death = true;
-            vCamFollow.Follow = null;
-            vCamFollow.LookAt = null;
+            VCamFollowNullSetter();
             collision.collider.GetComponent<Collider>().enabled = false;
             GetComponent<Rigidbody>().useGravity = true;
             animator.StateDeath();
-           // Time.timeScale = .5f;
+            // Time.timeScale = .5f;
             GetComponent<ParticlePlayer>().PlayWaterParticle();
-            Destroy(this.gameObject,5);
+            Destroy(this.gameObject, 5);
             SceneManager.LoadScene(0);
         }
     }
 
+    private void VCamFollowNullSetter()
+    {
+        vCamFollow.Follow = null;
+        vCamFollow.LookAt = null;
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            
+            StartCoroutine( FinishGame());
+
+        }
+    }
+
+    public bool IsFinished()
+    {
+        return finished;
+    }
+    private IEnumerator FinishGame()
+    {
+        finished = true;
+        transform.DOMove(GameManager.instance.finisher.transform.position + Vector3.one, 1);
+        yield return new  WaitForSeconds(1);
+        if (GetComponent<Stacker>().getStackAmount() > 0) { animator.StateThrow(); yield return (StartCoroutine(GetComponent<Stacker>().ThrowStackCoroutine())); }
+
+        yield return new  WaitForSeconds(2);
+        vCamFollow.LookAt = GameManager.instance.finisher.transform;
+        transform.DOLocalRotate(new Vector3(0,180,0),.1f,RotateMode.LocalAxisAdd);
+        animator.StateVictory();
+
+    }
 }

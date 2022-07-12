@@ -43,4 +43,20 @@ public class AnimatorController : MonoBehaviour
 
 
     }
+
+    public void StateVictory()
+    {
+        animator.applyRootMotion = false;
+        animator.Play("Victory");
+    } 
+    public void StateLose()
+    {
+      //  animator.applyRootMotion = true;
+        animator.Play("Defeat");
+    }
+    public void StateThrow()
+    {
+        animator.applyRootMotion = false;
+        animator.Play("Throw");
+    }
 }

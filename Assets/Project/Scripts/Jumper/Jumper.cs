@@ -22,7 +22,7 @@ public class Jumper : MonoBehaviour
         jumping = true;
 
         Debug.Log("we in boosted Jump");
-        transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 30, 0), ForceMode.Impulse);
+        transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 25, 0), ForceMode.Impulse);
         transform.GetComponent<Rigidbody>().useGravity = true;
     }
     public bool IsJumping()

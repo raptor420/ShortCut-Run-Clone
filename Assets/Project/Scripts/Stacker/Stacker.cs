@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 //namespace stacking
 public class Stacker : MonoBehaviour
 {
@@ -11,9 +12,9 @@ public class Stacker : MonoBehaviour
 
     private void Update()
     {
-      
+
     }
-   public int getStackAmount()
+    public int getStackAmount()
     {
 
         return stackAmount;
@@ -28,7 +29,7 @@ public class Stacker : MonoBehaviour
 
     private void PickUp(Collider other)
     {
-       // Debug.Log("pick");
+        // Debug.Log("pick");
         Destroy(other.gameObject);
         stackAmount++;
         var obj = Instantiate(stackPrefab, stackHolderParent);
@@ -44,5 +45,23 @@ public class Stacker : MonoBehaviour
             stackedItems.RemoveAt(stackedItems.Count - 1);
             stackAmount--;
         }
+    }
+    public void ThrowStacks ()
+    {
+       StartCoroutine( ThrowStackCoroutine());
+    }
+
+    public IEnumerator ThrowStackCoroutine()
+    {
+        yield return new WaitForSeconds(1.5f);
+        if (stackedItems.Count > 0)
+            foreach (var item in stackedItems)
+            {
+                item.transform.SetParent( null);
+                item.transform.DOJump(transform.position+ (transform.forward * 25 )+ Vector3.down*2, 20, 1, Random.Range(2.5f,5));
+            }
+        stackedItems.Clear();
+        stackAmount = 0;
+        yield return null;
     }
 }
