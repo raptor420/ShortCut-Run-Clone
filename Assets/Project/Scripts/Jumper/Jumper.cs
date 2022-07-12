@@ -11,7 +11,7 @@ public class Jumper : MonoBehaviour
     public void Jump()
     {
         jumping = true;
-        Debug.Log("JUMP");
+      //  Debug.Log("JUMP");
         // transform.DOJump(transform.forward*5,5,1,3);
         transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 10, 0), ForceMode.Impulse);
         transform.GetComponent<Rigidbody>().useGravity = true;
@@ -146,7 +146,6 @@ public class Jumper : MonoBehaviour
         {
             jumping = true;
             JumpPodJump();
-
         }
 
     }

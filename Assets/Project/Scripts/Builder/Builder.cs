@@ -9,7 +9,7 @@ public class Builder : MonoBehaviour
 {
     [SerializeField] GameObject buildPrefab;
     [SerializeField] Transform footPos;
-    float waitTime = 0.15f;
+    float waitTime = 0.1f;
     float timer=0;
     [SerializeField]bool building;
     [SerializeField] LayerMask layermask;
@@ -42,7 +42,7 @@ public class Builder : MonoBehaviour
            var plank =  Instantiate(buildPrefab, new Vector3(footPos.position.x, 1, footPos.position.z), transform.rotation);
           
             var initRot = plank.transform.rotation;
-            plank.transform.DOPunchScale(Vector3.one*.25f, .5f).OnComplete(()=>plank.GetComponent<Collider>().enabled=true);
+            plank.transform.DOPunchScale(Vector3.one*.25f, 1).OnComplete(()=>plank.GetComponent<Collider>().enabled=true);
         
             timer = 0;
         }
@@ -55,7 +55,8 @@ public class Builder : MonoBehaviour
         Debug.DrawRay(new Vector3(transform.position.x,transform.position.y+1,transform.position.z), -transform.up, Color.red);
         RaycastHit hit;
       //  if (Physics.BoxCast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward*.5f, Vector3.one * .25f, Vector3.down, out hit,Quaternion.identity,5))
-      if ((Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, Vector3.down, out hit,2.5f)))
+     // if ((Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) + transform.forward, Vector3.down, out hit,2.5f)))
+      if ((Physics.Raycast(transform.position+ Vector3.one, Vector3.down, out hit,3f)))
         {
             if (hit.collider != null)
             {
@@ -105,5 +106,12 @@ public class Builder : MonoBehaviour
         //}
 
 
+    }
+    private void OnDrawGizmos()
+    {
+        RaycastHit hit;
+      
+        //if ((Physics.Raycast(transform.position + Vector3.one, Vector3.down, out hit, 3f)) &&GetComponent<PlayerController>()!=null)
+        //    Debug.Log(hit.collider.name);
     }
 }

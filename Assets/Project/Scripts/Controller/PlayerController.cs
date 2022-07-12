@@ -111,6 +111,7 @@ public class PlayerController : MonoBehaviour
         }
         if(startRun)
         transform.position += transform.forward * moveSpeed * Time.deltaTime;
+       // GetComponent<Rigidbody>().velocity= transform.forward * moveSpeed ;
     }
 
     private void CheckStartRun()
