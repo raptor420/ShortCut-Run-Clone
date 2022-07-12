@@ -18,10 +18,11 @@ public class Builder : MonoBehaviour
     }
     public void Update()
     {
+        transform.GetComponent<Rigidbody>().useGravity = !building;
+
         BuildChecker();
         BuildMethod();
        
-            transform.GetComponent<Rigidbody>().useGravity = !building;
         
     }
 

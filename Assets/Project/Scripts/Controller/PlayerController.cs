@@ -46,13 +46,13 @@ public class PlayerController : MonoBehaviour
         StackerAnimChecker();
         if (GetComponent<Jumper>().IsJumping())
         {
-            GetComponent<Rigidbody>().constraints =RigidbodyConstraints.FreezeRotation;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
         else
         {
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation| RigidbodyConstraints.FreezePositionY;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
         }
-      
+
     }
 
     private void LateUpdate()
@@ -130,18 +130,23 @@ public class PlayerController : MonoBehaviour
     {
        if( collision.collider.CompareTag("Water"))
         {// better to make it OnDeath, but theres no time
-            death = true;
-            AudioManager.instance.PlayAudio(AudioManager.instance.splash);
-
-            VCamFollowNullSetter();
-            collision.collider.GetComponent<Collider>().enabled = false;
-            GetComponent<Rigidbody>().useGravity = true;
-            animator.StateDeath();
-            // Time.timeScale = .5f;
-            GetComponent<ParticlePlayer>().PlayWaterParticle();
-            Destroy(this.gameObject, 5);
-            SceneManager.LoadScene(0);
+            Death(collision);
         }
+    }
+
+    private void Death(Collision collision)
+    {
+        death = true;
+        AudioManager.instance.PlayAudio(AudioManager.instance.splash);
+
+        VCamFollowNullSetter();
+        collision.collider.GetComponent<Collider>().enabled = false;
+        GetComponent<Rigidbody>().useGravity = true;
+        animator.StateDeath();
+        // Time.timeScale = .5f;
+        GetComponent<ParticlePlayer>().PlayWaterParticle();
+        Destroy(this.gameObject, 5);
+        SceneManager.LoadScene(0);
     }
 
     private void VCamFollowNullSetter()
