@@ -48,13 +48,13 @@ public class PlayerController : MonoBehaviour
         if (GetComponent<Builder>().IsBuilding()||GetComponent<Jumper>().IsJumping())
         {
             timer += Time.deltaTime;
-            moveSpeed = Mathf.Lerp(5, 8, timer);
+            moveSpeed = Mathf.Lerp(5, 10, timer);
         }
 
         else
         {
             timer = 0;
-            moveSpeed = 5;
+            moveSpeed = 8;
         }
     }
 

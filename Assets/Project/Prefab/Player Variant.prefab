@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 5
-  moveSpeed: 5
+  moveSpeed: 8
   animator: {fileID: 0}
   characterBody: {fileID: 3690545567936158572}
   vCamFollow: {fileID: 0}
@@ -111,6 +111,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3690545567943685260}
+--- !u!114 &1994262237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3690545568900473940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef1d1cecb5279a741b0e5e1890c2a5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterparticle: {fileID: 1687118924408352, guid: 77c69ec12208c4c4380d15e30b6f8f68,
+    type: 3}
 --- !u!1001 &1548800767574240860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -213,6 +227,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 116
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758738117848009271, guid: 0313cd7a13d54df43825beeeb8ab808c,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758738117848009271, guid: 0313cd7a13d54df43825beeeb8ab808c,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0313cd7a13d54df43825beeeb8ab808c, type: 3}
