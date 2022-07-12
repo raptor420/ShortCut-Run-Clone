@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         if (GetComponent<Builder>().IsBuilding()||GetComponent<Jumper>().IsJumping())
         {
             timer += Time.deltaTime;
-            moveSpeed = Mathf.Lerp(5, 10, timer);
+            moveSpeed = Mathf.Lerp(8, 16, timer);
         }
 
         else
