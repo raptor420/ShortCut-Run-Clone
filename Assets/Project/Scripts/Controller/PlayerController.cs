@@ -131,6 +131,8 @@ public class PlayerController : MonoBehaviour
        if( collision.collider.CompareTag("Water"))
         {// better to make it OnDeath, but theres no time
             death = true;
+            AudioManager.instance.PlayAudio(AudioManager.instance.splash);
+
             VCamFollowNullSetter();
             collision.collider.GetComponent<Collider>().enabled = false;
             GetComponent<Rigidbody>().useGravity = true;

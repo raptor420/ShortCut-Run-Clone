@@ -15,6 +15,8 @@ public class Jumper : MonoBehaviour
         // transform.DOJump(transform.forward*5,5,1,3);
         transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 10, 0), ForceMode.Impulse);
         transform.GetComponent<Rigidbody>().useGravity = true;
+        AudioManager.instance.PlayAudio(AudioManager.instance.jump);
+
     }
 
     public void BoostedJump()
@@ -24,6 +26,8 @@ public class Jumper : MonoBehaviour
         Debug.Log("we in boosted Jump");
         transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 25, 0), ForceMode.Impulse);
         transform.GetComponent<Rigidbody>().useGravity = true;
+        AudioManager.instance.PlayAudio(AudioManager.instance.jump);
+
     }
     public bool IsJumping()
     {

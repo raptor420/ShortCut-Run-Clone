@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             GameStart = true;
+            AudioManager.instance.PlayAudio(AudioManager.instance.startRace);
+
             foreach (var ai in AIs)
             {
                 ai.StartAI();

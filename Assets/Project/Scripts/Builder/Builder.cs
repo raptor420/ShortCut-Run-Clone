@@ -43,7 +43,8 @@ public class Builder : MonoBehaviour
           
             var initRot = plank.transform.rotation;
             plank.transform.DOPunchScale(Vector3.one*.25f, 1).OnComplete(()=>plank.GetComponent<Collider>().enabled=true);
-        
+            AudioManager.instance.PlayAudio(AudioManager.instance.build);
+
             timer = 0;
         }
     }

@@ -35,6 +35,7 @@ public class Stacker : MonoBehaviour
         var obj = Instantiate(stackPrefab, stackHolderParent);
         obj.transform.localPosition = Vector3.zero + Vector3.up * obj.transform.localScale.y * (stackAmount - 1);
         stackedItems.Add(obj);
+        AudioManager.instance.PlayAudio(AudioManager.instance.pickup);
     }
     public void UseItem()
     {
