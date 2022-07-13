@@ -71,7 +71,16 @@ public class AIController : MonoBehaviour
         startRun = false;
         transform.DOLocalRotate(new Vector3(0, 180, 0), .1f, RotateMode.LocalAxisAdd);
 
-        animator.StateVictory();
+        if (GameManager.instance.GetPlayerPlace() == 1)
+        {
+            animator.StateLose();
+
+        }
+        else
+        {
+            animator.StateVictory();
+
+        }
 
     }
 }

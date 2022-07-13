@@ -36,6 +36,9 @@ public class Stacker : MonoBehaviour
         obj.transform.localPosition = Vector3.zero + Vector3.up * obj.transform.localScale.y * (stackAmount - 1);
         stackedItems.Add(obj);
         AudioManager.instance.PlayAudio(AudioManager.instance.pickup);
+        if(GetComponent<PlayerController>()!=null)
+        GetComponent<PlayerTextVisualizers>().UpdatetxtStacker();
+
     }
     public void UseItem()
     {

@@ -23,7 +23,7 @@ public class Jumper : MonoBehaviour
     {
         jumping = true;
 
-        Debug.Log("we in boosted Jump");
+       // Debug.Log("we in boosted Jump");
         transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 25, 0), ForceMode.Impulse);
         transform.GetComponent<Rigidbody>().useGravity = true;
         AudioManager.instance.PlayAudio(AudioManager.instance.jump);
@@ -41,10 +41,13 @@ public class Jumper : MonoBehaviour
     }
     private void Update()
     {
+
         JumpChecker();
         if (GetComponent<Builder>().IsBuilding())
         {
-            jumping = false; 
+            jumping = false;
+           // transform.position = new Vector3(transform.position.x, 1, transform.position.z);
+
         }
     }
 
@@ -126,14 +129,14 @@ public class Jumper : MonoBehaviour
     public void JumpPodJump()
     {
         BoostedJump();
-        Debug.Log("Wee jumopuin");
+        //Debug.Log("Wee jumopuin");
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Ground"))
         {
             jumping = false;
-
+            transform.position = new Vector3(transform.position.x, 1, transform.position.z);
         }
 
        else if (collision.collider.CompareTag("JumpPod"))

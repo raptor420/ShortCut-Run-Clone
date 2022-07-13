@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-using UnityEngine.SceneManagement;
 using DG.Tweening;
 public class PlayerController : MonoBehaviour
 {
@@ -137,17 +135,23 @@ public class PlayerController : MonoBehaviour
     private void Death(Collision collision)
     {
         death = true;
+        GetComponent<Jumper>().enabled = false;
+        GetComponent<Builder>().enabled = false;
+        GetComponent<Stacker>().enabled = false;
         AudioManager.instance.PlayAudio(AudioManager.instance.splash);
 
         VCamFollowNullSetter();
         collision.collider.GetComponent<Collider>().enabled = false;
         GetComponent<Rigidbody>().useGravity = true;
+        transform.DOMoveY(-10, 3);
         animator.StateDeath();
         // Time.timeScale = .5f;
         GetComponent<ParticlePlayer>().PlayWaterParticle();
         Destroy(this.gameObject, 5);
-        SceneManager.LoadScene(0);
+        GameManager.instance.LoadScene();
     }
+
+ 
 
     private void VCamFollowNullSetter()
     {
@@ -159,7 +163,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Finish"))
         {
-            
+            Debug.Log("wrtf");
             StartCoroutine( FinishGame());
 
         }
@@ -172,6 +176,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator FinishGame()
     {
         finished = true;
+        AudioManager.instance.PlayAudio(AudioManager.instance.victory);
         transform.DOMove(GameManager.instance.finisher.transform.position + Vector3.one, 1);
         yield return new  WaitForSeconds(1);
         if (GetComponent<Stacker>().getStackAmount() > 0) { animator.StateThrow(); yield return (StartCoroutine(GetComponent<Stacker>().ThrowStackCoroutine())); }
@@ -179,7 +184,17 @@ public class PlayerController : MonoBehaviour
         yield return new  WaitForSeconds(2);
         vCamFollow.LookAt = GameManager.instance.finisher.transform;
         transform.DOLocalRotate(new Vector3(0,180,0),.1f,RotateMode.LocalAxisAdd);
-        animator.StateVictory();
+        if (playerPlace == 1)
+        {
+            animator.StateVictory();
+
+        }
+        else
+        {
+            animator.StateLose();
+
+        }
+        GameManager.instance.LoadScene();
 
     }
 }

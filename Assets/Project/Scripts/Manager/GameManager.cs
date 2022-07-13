@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System;
+using UnityEngine.SceneManagement;
+using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]AIController[] AIs;
     [SerializeField]PlayerController player;
   [SerializeField]  List<GameObject> racers = new List<GameObject>();
+    [SerializeField] GameObject txtSwpieToMove;
     void Awake()
     {
         if (instance == null)
@@ -19,10 +21,17 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         racers.Add(player.gameObject);
-        foreach(var ai in AIs)
+        foreach (var ai in AIs)
         {
             racers.Add(ai.gameObject);
         }
+        SwiptTextInit();
+    }
+
+    private void SwiptTextInit()
+    {
+        txtSwpieToMove.SetActive(true);
+        txtSwpieToMove.transform.DOPunchScale(Vector3.one*.1f, 1).SetDelay(.5f).SetLoops(-1, LoopType.Yoyo);
     }
 
     private void Update()
@@ -41,6 +50,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             GameStart = true;
+            txtSwpieToMove.SetActive(false);
             AudioManager.instance.PlayAudio(AudioManager.instance.startRace);
 
             foreach (var ai in AIs)
@@ -68,5 +78,14 @@ public class GameManager : MonoBehaviour
             }
         }
         return 0;
+    }
+    public void LoadScene()
+    {
+        StartCoroutine(LoadSceneCo());
+    }
+    public IEnumerator LoadSceneCo()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(0);
     }
 }
